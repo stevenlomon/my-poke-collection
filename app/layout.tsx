@@ -22,7 +22,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     // Adding suppressHydrationWarning here to reinforce that the Browser-hydrated HTML only differs due to extensions which is outside of our control. Zero warnings or errors in Incognito mode!
     <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`} >
-      <body className="min-h-full flex flex-col">
+      <body suppressHydrationWarning className="min-h-full flex flex-col">
         {/* Our interactive not-changin-on-page-change navbar. The only JS that the Browser downloads when serving the page! */}
         <Navbar />
         
