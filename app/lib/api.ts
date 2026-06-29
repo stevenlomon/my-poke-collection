@@ -51,3 +51,43 @@ export const searchCards = async (query: string, page = 1, limit = 20) => {
     }
   }
 };
+
+export const getCardImage = async (id: string) => {
+  try {
+    const res = await fetch(`${BASE_URL}/images/${id}`, {
+      headers: getHeaders(),
+    });
+
+    if (!res.ok) throw new Error(`PokeWallet API returned status: ${res.status}`);
+
+    return res.blob(); // Native fetch has a built-in .blob() method!
+  } catch (err) {
+    console.error(`Server error fetching card image using getCardImage:`, err);
+
+    if (err instanceof Error) { 
+      throw err; //
+    } else {
+      throw new Error("An unexpected network error occurred while contacting PokeWallet."); //
+    }
+  }
+};
+
+export const getCardById = async (id: string) => {
+  try {
+    const res = await fetch(`${BASE_URL}/cards/${id}`, {
+      headers: getHeaders(),
+    });
+
+    if (!res.ok) throw new Error(`PokeWallet API returned status: ${res.status}`);
+    
+    return res.json();
+  } catch (err) {
+    console.error(`Server error fetching card details with id ${id} using getCardById:`, err);
+
+    if (err instanceof Error) { 
+      throw err; //
+    } else {
+      throw new Error("An unexpected network error occurred while contacting PokeWallet."); //
+    }
+  }
+};
