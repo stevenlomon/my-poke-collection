@@ -8,6 +8,7 @@ const Navbar = () => {
 
   return (
     <nav>
+      <Link href="/">MyPokéCollection</Link>
       <Link href="/explore">Explore Cards</Link>
       <Link href="/create">Create Custom Card</Link>
       <form>
