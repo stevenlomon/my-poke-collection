@@ -4,7 +4,7 @@ export interface PokemonCard {
   // We mirror the nested structure of the API response
   card_info: {
     id: string;
-    set_name?: string;
+    set_name?: string; // The question mark makes this optional
   };
 }
 
