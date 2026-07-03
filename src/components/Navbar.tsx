@@ -50,7 +50,7 @@ export default function Navbar() {
       if (timeoutRef.current) { // Improvement in our cleanup function; now we guarantee that timeoutRef.current will never be `undefined` which is not in the contract we've written with TypeScript haha
         clearTimeout(timeoutRef.current);
       }
-    }; 
+    };
   }, [searchTerm]); // Run every time there is a change in the searchTerm state variable
 
   // We still need a form submission function; now typed
@@ -65,12 +65,14 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="search-nav">
-      <Link href="/">MyPokéCollection</Link>
+    <nav className="sticky top-0 z-50 flex items-center gap-8 bg-slate-800 px-8 py-4 border-b border-slate-700 shadow-md">
+      <Link href="/" className="text-xl font-bold text-violet-500 transition-colors hover:text-violet-400">
+        MyPokéCollection
+      </Link>
 
       <Link
         href="/explore"
-        className="disabled-link"
+        className="font-medium text-slate-500 opacity-70 transition-all cursor-not-allowed hover:text-slate-400 hover:-translate-y-0.5 hover:rotate-1"
         onClick={(e) => e.preventDefault()}
         title="Coming Soon!"
       >
@@ -78,16 +80,24 @@ export default function Navbar() {
       </Link>
       <Link
         href="/create"
-        className="disabled-link"
+        className="font-medium text-slate-500 opacity-70 transition-all cursor-not-allowed hover:text-slate-400 hover:-translate-y-0.5 hover:rotate-1"
         onClick={(e) => e.preventDefault()}
         title="Coming Soon!"
       >
         Create Custom Card
       </Link>
 
-      <form onSubmit={handleSubmit}>
-        <input type='text' placeholder='Search Pokémon...' value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-        <button type='submit'>
+      <form
+        onSubmit={handleSubmit}
+        className="ml-auto flex items-center rounded-full bg-slate-900 px-4 py-1.5 border border-transparent transition-all focus-within:border-violet-500 focus-within:ring-4 focus-within:ring-violet-500/10"
+      >
+        <input
+          className="w-64 bg-transparent py-1 text-sm text-slate-50 outline-none border-none placeholder:text-slate-500"
+          type='text'
+          placeholder='Search Pokémon...'
+          value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)}
+        />
+        <button type='submit' className="px-2 text-lg opacity-60 transition-opacity hover:opacity-100 cursor-pointer">
           {/* To be swapped out with a Poké ball icon later */}
           {isSearching ? '🌀' : '🔍'}
         </button>
@@ -95,19 +105,19 @@ export default function Navbar() {
 
       {/* THE DROPDOWN */}
       {isOpen && (
-        <div className="search-dropdown">
+        <div className="absolute right-8 top-[calc(100%+5px)] z-[100] w-80 overflow-hidden rounded-xl border border-slate-700 bg-slate-800 shadow-xl">
           {isSearching ? (
-            <p className="dropdown-message">Locating Pokémon...</p>
+            <p className="m-0 p-4 text-center text-sm text-slate-400">Locating Pokémon...</p>
           ) : previews.length > 0 ? (
-            <ul className="preview-list">
+            <ul className="m-0 flex flex-col p-0 list-none">
 
               {previews.map((card: PokemonCard) => ( // We could leave out `: PokemonCard` here and TS would infer the type from this line `const [previews, setPreviews] = useState<PokemonCard[]>([]);`
-                <li key={card.id} className="preview-item">
+                <li key={card.id} className="border-b border-slate-700 last:border-b-0">
                   <Link
                     href={`/card/${card.id}`} // Next.js standard href
                     onClick={() => setIsOpen(false)}
-                    className="preview-link"
-                    // The "Backpack" is gone! No more `state={{ cardData: card }}`
+                    className="flex flex-col p-3 text-slate-50 transition-colors hover:bg-slate-700/50"
+                  // The "Backpack" is gone! No more `state={{ cardData: card }}`
                   >
                     <strong>{card.card_info?.name}</strong> <br />
                     <small className="preview-set-name">{card.card_info?.set_name}</small>
@@ -116,18 +126,18 @@ export default function Navbar() {
               ))}
 
               {/* The Goodreads-style "See all results" footer */}
-              <li className="preview-footer">
+              <li className="bg-slate-900/50 text-center">
                 <Link
                   href={`/search?q=${searchTerm}`}
                   onClick={() => setIsOpen(false)}
-                  className="preview-footer-link"
+                  className="block p-3 text-sm font-bold text-violet-400 transition-colors hover:bg-slate-800"
                 >
                   See all results for "{searchTerm}"
                 </Link>
               </li>
             </ul>
           ) : (
-            <p className="dropdown-message">No Pokémon found in the tall grass.</p>
+            <p className="m-0 p-4 text-center text-sm text-slate-400">No Pokémon found in the tall grass.</p>
           )}
         </div>
       )}
