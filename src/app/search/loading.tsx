@@ -15,13 +15,13 @@
 export default function Loading() {
   return (
     // A Tailwind flex container to center everything perfectly on the screen
-    <div className="flex flex-col items-center justify-center min-h-[50vh]">
+    <div className="flex min-h-[50vh] flex-col items-center justify-center">
       
       {/* Pure Tailwind Pokéball themed spinner */}
-      <div className="h-16 w-16 animate-spin rounded-full border-4 border-gray-200 border-t-red-500"></div>
+      <div className="h-16 w-16 animate-spin rounded-full border-4 border-slate-700 border-t-violet-500"></div>
       
       {/* The pulsing text to let the user know the server is working */}
-      <p className="mt-6 text-lg font-semibold text-gray-700 animate-pulse">
+      <p className="mt-6 text-lg font-semibold text-slate-400 animate-pulse">
         Catching Pokémon data...
       </p>
       

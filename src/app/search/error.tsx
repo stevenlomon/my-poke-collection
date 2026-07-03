@@ -27,13 +27,13 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
   }, [error]);
 
   return (
-    <div className="flex flex-col items-center justify-center p-10 text-center">
-      <h2>Oh no! A wild error appeared!</h2>
-      <p className="text-gray-500 my-4">{error.message || "Failed to fetch Pokémon data."}</p>
-      
+    <div className="mt-24 flex flex-col items-center justify-center p-10 text-center">
+      <h2 className="text-2xl font-bold text-red-400">Oh no! A wild error appeared!</h2>
+      <p className="my-4 text-slate-400">{error.message || "Failed to fetch Pokémon data."}</p>
+
       {/* The reset function tells Next.js to re-run the server component and try again! */}
       <button
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        className="cursor-pointer rounded-lg bg-slate-800 px-6 py-2.5 font-semibold text-slate-50 shadow-sm transition-all hover:-translate-y-0.5 hover:bg-slate-700 hover:shadow-md"
         onClick={() => reset()}
       >
         Try Again

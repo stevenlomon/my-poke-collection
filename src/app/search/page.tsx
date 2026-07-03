@@ -17,9 +17,9 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   // Our empty state; returned instanty, no fetching needed
   if (!query) {
     return (
-      <div>
-        <h2>Looking for Pokémon?</h2>
-        <p>Use the search bar to find cards to add to your collection!</p>
+      <div className="mt-24 text-center">
+        <h2 className="mb-4 text-2xl font-bold text-slate-50">Looking for Pokémon?</h2>
+        <p className="text-slate-400">Use the search bar to find cards to add to your collection!</p>
       </div>
     )
   }
@@ -33,9 +33,9 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   // Our zero results state
   if (searchResults.lenth === 0) {
     return (
-      <div>
-        <h2>No Pokémon found in the tall grass!</h2>
-        <p>Try with another search query!</p>
+      <div className="mt-24 text-center">
+        <h2 className="mb-4 text-2xl font-bold text-slate-50">No Pokémon found in the tall grass!</h2>
+        <p className="text-slate-400">Try with another search query!</p>
       </div>
     );
   }
