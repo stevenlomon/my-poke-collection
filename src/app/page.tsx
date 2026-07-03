@@ -8,7 +8,10 @@ export default function Home() {
   const collectionSize = userCollection.length;
 
   return (
-    <div className={collectionSize === 0 ? "empty-collection" : "collection-grid"}>
+    <div className={collectionSize === 0
+      ? "mt-16 text-center text-lg font-medium text-slate-400"
+      : "grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-8 p-8"
+    }>
       {collectionSize === 0 ? (
         <p>There are no cards in your collection! Add your first card now :)</p>
       ) : (

@@ -15,7 +15,7 @@ export default function CardImage({ cardId, cardName }: CardImageProps) {
       alt={cardName}
       width={250}  // Next.js requires width/height to prevent layout shift
       height={350}
-      className="card-image object-cover"
+      className="h-auto w-full max-w-60 rounded-lg object-cover shadow-sm"
     />
   )
 };
