@@ -13,10 +13,13 @@ export default function AddToCollectionButton({ card }: AddToCollectionButtonPro
   const router = useRouter();
 
   return (
-    <button className='add-to-collection-button' disabled={isAlreadyOwned} onClick={() => {
-      addToCollection(card); // No `onAdd` prop anymore, we can use `addToCollection` straight from our Context instead
-      router.push('/'); // Direct equivalent of `navigate('/');`
-    }}>
+    <button
+      className='w-full max-w-62.5 cursor-pointer rounded-lg bg-violet-600 px-6 py-3 text-base font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-violet-500 hover:shadow-md disabled:cursor-not-allowed disabled:border disabled:border-slate-700 disabled:bg-slate-900 disabled:text-slate-500 disabled:hover:translate-y-0 disabled:hover:shadow-sm'
+      disabled={isAlreadyOwned} onClick={() => {
+        addToCollection(card); // No `onAdd` prop anymore, we can use `addToCollection` straight from our Context instead
+        router.push('/'); // Direct equivalent of `navigate('/');`
+      }}
+    >
       {!isAlreadyOwned ? 'Add to Collection!' : 'Already in Collection'}
     </button>
   )

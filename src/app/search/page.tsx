@@ -8,7 +8,7 @@ import { searchCards } from '@/lib/api';
 import { type PokemonCard } from '@/lib/types';
 import SearchResultItem from '@/components/SearchResultItem';
 
-export default async function SearchPage({ searchParams }: { searchParams: Promise<{ q?: string, page?: string, limit?: string }>;}) {
+export default async function SearchPage({ searchParams }: { searchParams: Promise<{ q?: string, page?: string, limit?: string }>; }) {
   const params = await searchParams;
   const query = params.q;
   const page = parseInt(params.page || "1");
@@ -41,10 +41,10 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
   }
 
   return (
-    <div>
-      <p>Showing results for "{query}" - {pagination.total} total results</p>
-      
-      <ul className="search-results-grid">
+    <div className="p-8">
+      <p className="text-slate-400 mb-8 font-medium">Showing results for "{query}" - {pagination.total} total results</p>
+
+      <ul className="grid grid-cols-[repeat(auto-fill,minmax(220px,1fr))] gap-8 p-0 m-0 list-none">
         {searchResults.map((result: PokemonCard) => (
           // Once again; no more "Backpack strat" haha! Next.js Link handles all of the caching
           <Link key={result.id} href={`/card/${result.id}`}>
@@ -54,29 +54,33 @@ export default async function SearchPage({ searchParams }: { searchParams: Promi
       </ul>
 
       {/* The Pagination Controls */}
-      <div className="pagination-controls">
+      <div className="mt-12 flex items-center justify-center gap-4">
         {/* If we can go back, render a Link. If not, render a disabled button! */}
         {pagination.page > 1 ? (
-          <Link 
-            className="pagination-btn" 
+          <Link
+            className="rounded-lg border border-slate-700 bg-slate-800 px-6 py-2.5 font-semibold text-slate-50 shadow-sm transition-all hover:-translate-y-0.5 hover:border-violet-500 hover:text-violet-400 hover:shadow-md"
             href={`/search?q=${query}&page=${page - 1}&limit=${limit}`}
           >
             Previous
           </Link>
         ) : (
-          <button className="pagination-btn" disabled>Previous</button>
+          <button className="cursor-not-allowed rounded-lg border border-slate-800 bg-slate-900 px-6 py-2.5 font-semibold text-slate-500 opacity-50 shadow-none" disabled>
+            Previous
+          </button>
         )}
 
         {/* If we can go forward, render a Link. If not, render a disabled button! */}
         {pagination.page < pagination.total_pages ? (
-          <Link 
-            className="pagination-btn" 
+          <Link
+            className="rounded-lg border border-slate-700 bg-slate-800 px-6 py-2.5 font-semibold text-slate-50 shadow-sm transition-all hover:-translate-y-0.5 hover:border-violet-500 hover:text-violet-400 hover:shadow-md"
             href={`/search?q=${query}&page=${page + 1}&limit=${limit}`}
           >
             Next
           </Link>
         ) : (
-          <button className="pagination-btn" disabled>Next</button>
+          <button className="cursor-not-allowed rounded-lg border border-slate-800 bg-slate-900 px-6 py-2.5 font-semibold text-slate-500 opacity-50 shadow-none" disabled>
+            Next
+          </button>
         )}
       </div>
     </div>
