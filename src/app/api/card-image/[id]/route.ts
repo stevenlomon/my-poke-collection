@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 // import { getCardImage } from './../../../lib/api';
 // We could write our import like that but.. it looks like the work of a crazy person haha!
 import { getCardImage } from '@/lib/api'; // Using the `@` path alias!
+import { promises as fs } from 'fs'; // To read files off the server
+import path from 'path'; // To safely navigate folder structures
 
 // Our Next.js Backend fetches the raw image binary data from the PokéWallet API and then this Route handler 
 // will sit as a proxy between the PokéWallet API and our frontend. The browser never directly talks to PokeWallet, 
@@ -24,6 +26,19 @@ export async function GET(_request: Request, { params }: { params: Promise<{ id:
       },
     });
   } catch (err) {
-    return new NextResponse("Image not found", { status: 404 });
+    // Get the absolute path to your public folder
+    const fallbackPath = path.join(process.cwd(), 'public', 'unown.webp');
+
+    // Read the image into raw binary data
+    const fallbackBuffer = await fs.readFile(fallbackPath);
+    
+    // Send it back as a completely normal 200 OK response!
+    return new NextResponse(fallbackBuffer, {
+      status: 200,
+      headers: {
+        'Content-Type': 'image/webp',
+        'Cache-Control': 'public, max-age=86400, immutable',
+      },
+    });
   }
 };
